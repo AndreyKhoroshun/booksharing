@@ -7,3 +7,13 @@ class Book(models.Model):
     publish_year = models.PositiveSmallIntegerField()
     review = models.CharField(max_length=512)
     condition = models.PositiveSmallIntegerField()
+
+
+class Author(models.Model):
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    date_of_birth = models.PositiveSmallIntegerField()
+    date_of_death = models.PositiveSmallIntegerField()
+    country = models.CharField(max_length=50)
+    gender = models.CharField(max_length=10)
+    native_language = models.CharField(max_length=20)
