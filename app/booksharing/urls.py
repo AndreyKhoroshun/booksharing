@@ -8,6 +8,6 @@ urlpatterns = [
 
     path('book/list/', views.book_list),
 
-    path('author/list/', views.author_list),
+    path('/books/author/list/', views.author_list),
 
 ]
