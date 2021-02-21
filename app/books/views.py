@@ -1,18 +1,17 @@
-from django.shortcuts import render
 from django.http import HttpResponse
-
-import string
-import random
-
-
-def gennerate_password(lenght: int = 10) -> str:
-    password = ''
-    for _ in range(lenght):
-        password += random.choice(string.ascii_letters)
-    return password
+from books.models import Book
+from books.models import Author
 
 
-def hello_world(request):
-    length = int(request.GET.get('length') or 10)
-    password = gennerate_password(length)
-    return HttpResponse(password)
+def book_list(request):
+    response_content = ''
+    for book in Book.objects.all():
+        response_content += f'ID: {book.id}, Author: {book.author} <br/>'
+    return HttpResponse(response_content)
+
+
+def author_list(request):
+    response_content = ''
+    for author in Author.objects.all():
+        response_content += f'ID: {author.id}, Author: {author.last_name} <br/>'
+    return HttpResponse(response_content)
