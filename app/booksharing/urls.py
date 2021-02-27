@@ -6,8 +6,10 @@ from books import views
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    path('book/list/', views.book_list),
+    path('books/list/', views.book_list),
 
-    path('author/list/', views.author_list),
+    path('authors/list/', views.author_list),
+
+    path('books/create/', views.book_create),
 
 ]
