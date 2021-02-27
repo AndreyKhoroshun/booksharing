@@ -2,6 +2,7 @@ from books.models import Book
 from books.models import Author
 from django.shortcuts import render
 from books.forms import BookForm, AuthorForm
+from django.http import HttpResponseRedirect
 
 
 def book_list(request):
@@ -19,7 +20,14 @@ def author_list(request):
 
 
 def book_create(request):
-    form = BookForm()
+    form_data = request.GET
+    if form_data:
+        form = BookForm(form_data)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/books/list/')
+    else:
+        form = BookForm()
     context = {'message': 'Create book',
                'form': form,
                }
@@ -27,7 +35,14 @@ def book_create(request):
 
 
 def author_create(request):
-    form = AuthorForm()
+    form_data = request.GET
+    if form_data:
+        form = AuthorForm(form_data)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/authors/list/')
+    else:
+        form = AuthorForm()
     context = {'message': 'Create author',
                'form': form,
                }
