@@ -15,3 +15,8 @@ def author_list(request):
         'author_list': Author.objects.all(),
     }
     return render(request, 'author_list.html', context=context)
+
+
+def book_create(request):
+    context = {'message': 'Create book'}
+    return render(request, 'books_create.html', context=context)
