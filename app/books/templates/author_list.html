@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+{% for author in author_list %}
+    id: {{ author.first_name }} title: {{ author.last_name }} <br>
+{% endfor %}
+
+</body>
+</html>
