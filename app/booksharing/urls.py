@@ -12,4 +12,6 @@ urlpatterns = [
 
     path('books/create/', views.book_create),
 
+    path('authors/create/', views.author_create),
+
 ]
