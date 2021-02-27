@@ -1,6 +1,7 @@
 from books.models import Book
 from books.models import Author
 from django.shortcuts import render
+from books.forms import BookForm
 
 
 def book_list(request):
@@ -18,5 +19,8 @@ def author_list(request):
 
 
 def book_create(request):
-    context = {'message': 'Create book'}
+    form = BookForm()
+    context = {'message': 'Create book',
+               'form': form,
+               }
     return render(request, 'books_create.html', context=context)
