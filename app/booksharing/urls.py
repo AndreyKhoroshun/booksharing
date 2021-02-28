@@ -14,4 +14,8 @@ urlpatterns = [
 
     path('authors/create/', views.author_create),
 
+    path('books/update/<int:pk>/', views.book_update),
+
+    path('authors/update/<int:pk>/', views.author_update),
+
 ]
