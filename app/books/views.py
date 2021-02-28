@@ -5,6 +5,10 @@ from books.forms import BookForm, AuthorForm
 from django.http import HttpResponseRedirect
 
 
+def index(request):
+    return render(request, 'index.html')
+
+
 def book_list(request):
     context = {
         'books_list': Book.objects.all(),
