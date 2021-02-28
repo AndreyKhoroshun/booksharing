@@ -18,4 +18,8 @@ urlpatterns = [
 
     path('authors/update/<int:pk>/', views.author_update),
 
+    path('books/delete/<int:pk>/', views.book_delete),
+
+    path('authors/delete/<int:pk>/', views.author_delete),
+
 ]
