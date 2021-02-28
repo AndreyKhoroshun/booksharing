@@ -50,15 +50,15 @@ def author_create(request):
 
 
 def book_update(request, pk):
-    book_obj = get_object_or_404(Book, pk=pk)
+    instance = get_object_or_404(Book, pk=pk)
     form_data = request.POST
     if request.method == 'POST':
-        form = BookForm(form_data, instance=book_obj)
+        form = BookForm(form_data, instance=instance)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect('/books/list/')
     elif request.method == 'GET':
-        form = BookForm(instance=book_obj)
+        form = BookForm(instance=instance)
     context = {'message': 'Book update',
                'form': form,
                }
@@ -66,16 +66,18 @@ def book_update(request, pk):
 
 
 def author_update(request, pk):
-    author_obj = get_object_or_404(Author, pk=pk)
+    instance = get_object_or_404(Author, pk=pk)
     form_data = request.POST
     if request.method == 'POST':
-        form = AuthorForm(form_data, instance=author_obj)
+        form = AuthorForm(form_data, instance=instance)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect('/authors/list/')
     elif request.method == 'GET':
-        form = AuthorForm(instance=author_obj)
+        form = AuthorForm(instance=instance)
     context = {'message': 'Author update',
                'form': form,
                }
     return render(request, 'authors_create.html', context=context)
+
+
