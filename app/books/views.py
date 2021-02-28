@@ -81,3 +81,13 @@ def author_update(request, pk):
     return render(request, 'authors_create.html', context=context)
 
 
+def book_delete(request, pk):
+    instance = get_object_or_404(Book, pk=pk)
+    instance.delete()
+    return HttpResponseRedirect('/books/list/')
+
+
+def author_delete(request, pk):
+    instance = get_object_or_404(Author, pk=pk)
+    instance.delete()
+    return HttpResponseRedirect('/authors/list/')
