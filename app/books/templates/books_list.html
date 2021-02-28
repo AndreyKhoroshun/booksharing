@@ -6,8 +6,14 @@
 </head>
 <body>
 
+<a href="/books/create/">books create</a>
+
+<br>
+
 {% for book in books_list %}
-    id: {{ book.id }} title: {{ book.title }} <br>
+    id: {{ book.id }} title: {{ book.title }}
+    <a href="/books/update/{{ book.id }}/">edit</a>
+    <br>
 {% endfor %}
 
 </body>
