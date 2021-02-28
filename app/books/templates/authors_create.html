@@ -19,7 +19,7 @@
 </form>
 
 {% if form.instance.id %}
-<a href="/authors/delete/{{ form.instance.id }}/">DELETE</a>
+<a href="{% url 'authors-delete' form.instance.id %}">DELETE</a>
 {% endif %}
 
 </body>
