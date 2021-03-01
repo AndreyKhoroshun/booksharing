@@ -102,4 +102,3 @@ def logs_list(request):
         'logs_list': Log.objects.all()
     }
     return render(request, 'logs_list.html', context=context)
-
