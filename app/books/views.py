@@ -1,8 +1,11 @@
 from books.models import Book
 from books.models import Author
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from books.forms import BookForm, AuthorForm
-from django.http import HttpResponseRedirect
+
+
+def index(request):
+    return render(request, 'index.html')
 
 
 def book_list(request):
@@ -20,13 +23,13 @@ def author_list(request):
 
 
 def book_create(request):
-    form_data = request.GET
-    if form_data:
+    form_data = request.POST
+    if request.method == 'POST':
         form = BookForm(form_data)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/books/list/')
-    else:
+            return redirect('books-list')
+    elif request.method == 'GET':
         form = BookForm()
     context = {'message': 'Create book',
                'form': form,
@@ -35,15 +38,59 @@ def book_create(request):
 
 
 def author_create(request):
-    form_data = request.GET
-    if form_data:
+    form_data = request.POST
+    if request.method == 'POST':
         form = AuthorForm(form_data)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('/authors/list/')
-    else:
+            return redirect('authors-list')
+    elif request.method == 'GET':
         form = AuthorForm()
     context = {'message': 'Create author',
                'form': form,
                }
     return render(request, 'authors_create.html', context=context)
+
+
+def book_update(request, pk):
+    instance = get_object_or_404(Book, pk=pk)
+    form_data = request.POST
+    if request.method == 'POST':
+        form = BookForm(form_data, instance=instance)
+        if form.is_valid():
+            form.save()
+            return redirect('books-list')
+    elif request.method == 'GET':
+        form = BookForm(instance=instance)
+    context = {'message': 'Book update',
+               'form': form,
+               }
+    return render(request, 'books_create.html', context=context)
+
+
+def author_update(request, pk):
+    instance = get_object_or_404(Author, pk=pk)
+    form_data = request.POST
+    if request.method == 'POST':
+        form = AuthorForm(form_data, instance=instance)
+        if form.is_valid():
+            form.save()
+            return redirect('authors-list')
+    elif request.method == 'GET':
+        form = AuthorForm(instance=instance)
+    context = {'message': 'Author update',
+               'form': form,
+               }
+    return render(request, 'authors_create.html', context=context)
+
+
+def book_delete(request, pk):
+    instance = get_object_or_404(Book, pk=pk)
+    instance.delete()
+    return redirect('books-list')
+
+
+def author_delete(request, pk):
+    instance = get_object_or_404(Author, pk=pk)
+    instance.delete()
+    return redirect('authors-list')

@@ -6,16 +6,21 @@
 </head>
 <body>
 
-<h1>BOOK CREATE</h1>
+<h1>{{ message }}</h1>
 
 <p>
     form to add new book
 </p>
 
-<form>
+<form method="post">
+    {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Submit</button>
 </form>
+
+{% if form.instance.id %}
+<a href="{% url 'books-delete' form.instance.id %}">DELETE</a>
+{% endif %}
 
 </body>
 </html>
