@@ -1,9 +1,7 @@
 from books.models import Book
 from books.models import Author
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from books.forms import BookForm, AuthorForm
-from django.http import HttpResponseRedirect
-from django.urls import reverse
 
 
 def index(request):
@@ -30,7 +28,7 @@ def book_create(request):
         form = BookForm(form_data)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('books-list'))
+            return redirect('books-list')
     elif request.method == 'GET':
         form = BookForm()
     context = {'message': 'Create book',
@@ -45,7 +43,7 @@ def author_create(request):
         form = AuthorForm(form_data)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('authors-list'))
+            return redirect('authors-list')
     elif request.method == 'GET':
         form = AuthorForm()
     context = {'message': 'Create author',
@@ -61,7 +59,7 @@ def book_update(request, pk):
         form = BookForm(form_data, instance=instance)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('books-list'))
+            return redirect('books-list')
     elif request.method == 'GET':
         form = BookForm(instance=instance)
     context = {'message': 'Book update',
@@ -77,7 +75,7 @@ def author_update(request, pk):
         form = AuthorForm(form_data, instance=instance)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('authors-list'))
+            return redirect('authors-list')
     elif request.method == 'GET':
         form = AuthorForm(instance=instance)
     context = {'message': 'Author update',
@@ -89,10 +87,10 @@ def author_update(request, pk):
 def book_delete(request, pk):
     instance = get_object_or_404(Book, pk=pk)
     instance.delete()
-    return HttpResponseRedirect(reverse('books-list'))
+    return redirect('books-list')
 
 
 def author_delete(request, pk):
     instance = get_object_or_404(Author, pk=pk)
     instance.delete()
-    return HttpResponseRedirect(reverse('authors-list'))
+    return redirect('authors-list')
