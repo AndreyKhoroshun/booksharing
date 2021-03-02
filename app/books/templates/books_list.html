@@ -1,10 +1,30 @@
-{% extends 'base.html'%}
+{% extends 'base.html' %}
+
 {% block content %}
+    <br>
     <a href="{% url 'books-create' %}">books create</a>
     <br>
-    {% for book in books_list %}
-        id: {{ book.id }} title: {{ book.title }}
-        <a href="{% url 'books-update' book.id %}">edit</a>
-        <br>
-    {% endfor %}
+
+    <table border = "1">
+   <tr>
+    <th>#</th>
+    <th>ID</th>
+    <th>Author Name</th>
+    <th>Title</th>
+    <th>Publish Year</th>
+    <th>Review</th>
+    <th>Condition</th>
+   </tr>
+        {% for book in books_list%}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ book.id }}</td>
+            <td>{{ book.author }}</td>
+            <td>{{ book.title }}</td>
+            <td>{{ book.publish_year }}</td>
+            <td>{{ book.review }}</td>
+            <td>{{ book.condition }}</td>
+        </tr>
+        {% endfor %}
+  </table>
 {% endblock content %}
