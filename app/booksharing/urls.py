@@ -15,5 +15,5 @@ urlpatterns = [
     path('authors/update/<int:pk>/', views.author_update, name='authors-update'),
     path('books/delete/<int:pk>/', views.book_delete, name='books-delete'),
     path('authors/delete/<int:pk>/', views.author_delete, name='authors-delete'),
-
+    path('logs/', views.logs_list, name='logs')
 ]
