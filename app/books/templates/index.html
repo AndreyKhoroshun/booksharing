@@ -1,17 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>INDEX</title>
-</head>
-<body>
+{% extends 'base.html'%}
 
-Hello from index
-<br>
-
-<a href="{% url 'books-list' %}">books list</a>
-<br>
-<a href="{% url 'authors-list' %}">authors list</a>
-
-</body>
-</html>
+{% block content %}
+    Hello from index
+{% endblock content %}
