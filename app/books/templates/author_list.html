@@ -1,11 +1,34 @@
-{% extends 'base.html'%}
+{% extends 'base.html' %}
 
 {% block content %}
+    <br>
     <a href="{% url 'authors-create' %}">authors create</a>
     <br>
-    {% for author in author_list %}
-        id: {{ author.first_name }} title: {{ author.last_name }}
-        <a href="{% url 'authors-update' author.id %}">edit</a>
-        <br>
-    {% endfor %}
+
+<table border = "1">
+   <tr>
+    <th>#</th>
+    <th>ID</th>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>Date of birth</th>
+    <th>Date of death</th>
+    <th>Country</th>
+    <th>Gender</th>
+    <th>Native Language</th>
+   </tr>
+        {% for author in author_list%}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ author.id }}</td>
+            <td>{{ author.first_name }}</td>
+            <td>{{ author.last_name }}</td>
+            <td>{{ author.date_of_birth }}</td>
+            <td>{{ author.date_of_death }}</td>
+            <td>{{ author.country }}</td>
+            <td>{{ author.gender }}</td>
+            <td>{{ author.native_language }}</td>
+        </tr>
+        {% endfor %}
+  </table>
 {% endblock content %}
