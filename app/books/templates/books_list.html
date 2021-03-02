@@ -14,6 +14,7 @@
     <th>Publish Year</th>
     <th>Review</th>
     <th>Condition</th>
+    <th></th>
    </tr>
         {% for book in books_list%}
         <tr>
@@ -24,6 +25,8 @@
             <td>{{ book.publish_year }}</td>
             <td>{{ book.review }}</td>
             <td>{{ book.condition }}</td>
+            <td><a href="{% url 'books-update' book.pk %}">
+                Edit</a></td>
         </tr>
         {% endfor %}
   </table>

@@ -16,6 +16,7 @@
     <th>Country</th>
     <th>Gender</th>
     <th>Native Language</th>
+    <th></th>
    </tr>
         {% for author in author_list%}
         <tr>
@@ -28,6 +29,8 @@
             <td>{{ author.country }}</td>
             <td>{{ author.gender }}</td>
             <td>{{ author.native_language }}</td>
+            <td><a href="{% url 'authors-update' author.pk %}">
+                Edit</a></td>
         </tr>
         {% endfor %}
   </table>
