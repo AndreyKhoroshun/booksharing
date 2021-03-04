@@ -1,26 +1,16 @@
-<!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html'%}
 
-<h1>{{ message }}</h1>
-
-<p>
-    form to add new book
-</p>
-
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Submit</button>
-</form>
-
-{% if form.instance.id %}
-<a href="{% url 'books-delete' form.instance.id %}">DELETE</a>
-{% endif %}
-
-</body>
-</html>
+{% block content %}
+    <h1>{{ message }}</h1>
+    <p>
+        form to add new book
+    </p>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+    {% if form.instance.id %}
+    <a href="{% url 'books-delete' form.instance.id %}">DELETE</a>
+    {% endif %}
+{% endblock content %}
