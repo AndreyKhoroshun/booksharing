@@ -17,7 +17,7 @@ urlpatterns = [
     path('authors/create/', views.AuthorCreate.as_view(), name='authors-create'),
     path('books/update/<int:pk>/', views.BookUpdate.as_view(), name='books-update'),
     path('authors/update/<int:pk>/', views.AuthorUpdate.as_view(), name='authors-update'),
-    path('books/delete/<int:pk>/', views.book_delete, name='books-delete'),
+    path('books/delete/<int:pk>/', views.BookDelete.as_view(), name='books-delete'),
     path('authors/delete/<int:pk>/', views.author_delete, name='authors-delete'),
     path('logs/', views.logs_list, name='logs'),
     path('__debug__/', include(debug_toolbar.urls)),
