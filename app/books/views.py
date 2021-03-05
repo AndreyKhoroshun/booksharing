@@ -3,7 +3,7 @@ from books.models import Author
 from books.models import Log
 from django.shortcuts import render, get_object_or_404, redirect
 from books.forms import BookForm, AuthorForm
-from django.views.generic import CreateView
+from django.views.generic import CreateView, UpdateView
 from django.urls import reverse_lazy
 
 
@@ -48,6 +48,18 @@ class AuthorCreate(CreateView):
         'country',
         'gender',
         'native_language',
+    )
+
+
+class BookUpdate(UpdateView):
+    model = Book
+    success_url = reverse_lazy('books-list')
+    fields = (
+        'author',
+        'title',
+        'publish_year',
+        'review',
+        'condition',
     )
 
 
