@@ -1,0 +1,16 @@
+{% extends 'base.html'%}
+
+{% block content %}
+    <h1>{{ message }}</h1>
+    <p>
+        form to add new book
+    </p>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+    {% if form.instance.id %}
+    <a href="{% url 'books-delete' form.instance.id %}">DELETE</a>
+    {% endif %}
+{% endblock content %}
