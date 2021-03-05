@@ -14,6 +14,10 @@ class BookList(ListView):
     queryset = Book.objects.all()
 
 
+class AuthorList(ListView):
+    queryset = Author.objects.all()
+
+
 def author_list(request):
     context = {
         'author_list': Author.objects.all(),
