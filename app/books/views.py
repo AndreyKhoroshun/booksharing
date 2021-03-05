@@ -18,13 +18,6 @@ class AuthorList(ListView):
     queryset = Author.objects.all()
 
 
-def author_list(request):
-    context = {
-        'author_list': Author.objects.all(),
-    }
-    return render(request, 'author_list.html', context=context)
-
-
 class BookCreate(CreateView):
     model = Book
     success_url = reverse_lazy('books-list')
