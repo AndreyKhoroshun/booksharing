@@ -3,6 +3,8 @@ from books.models import Author
 from books.models import Log
 from django.shortcuts import render, get_object_or_404, redirect
 from books.forms import BookForm, AuthorForm
+from django.views.generic import CreateView
+from django.urls import reverse_lazy
 
 
 def index(request):
@@ -23,19 +25,16 @@ def author_list(request):
     return render(request, 'author_list.html', context=context)
 
 
-def book_create(request):
-    form_data = request.POST
-    if request.method == 'POST':
-        form = BookForm(form_data)
-        if form.is_valid():
-            form.save()
-            return redirect('books-list')
-    elif request.method == 'GET':
-        form = BookForm()
-    context = {'message': 'Create book',
-               'form': form,
-               }
-    return render(request, 'books_create.html', context=context)
+class BookCreate(CreateView):
+    model = Book
+    success_url = reverse_lazy('books-list')
+    fields = (
+        'author',
+        'title',
+        'publish_year',
+        'review',
+        'condition',
+    )
 
 
 def author_create(request):
