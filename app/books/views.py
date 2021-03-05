@@ -63,22 +63,6 @@ class BookUpdate(UpdateView):
     )
 
 
-def book_update(request, pk):
-    instance = get_object_or_404(Book, pk=pk)
-    form_data = request.POST
-    if request.method == 'POST':
-        form = BookForm(form_data, instance=instance)
-        if form.is_valid():
-            form.save()
-            return redirect('books-list')
-    elif request.method == 'GET':
-        form = BookForm(instance=instance)
-    context = {'message': 'Book update',
-               'form': form,
-               }
-    return render(request, 'books_create.html', context=context)
-
-
 def author_update(request, pk):
     instance = get_object_or_404(Author, pk=pk)
     form_data = request.POST
