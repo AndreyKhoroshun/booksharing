@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     'django_extensions',
 
+    'accounts',
     'books',
 
     'debug_toolbar',
