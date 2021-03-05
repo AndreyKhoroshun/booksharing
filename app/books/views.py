@@ -2,7 +2,7 @@ from books.models import Book
 from books.models import Author
 from books.models import Log
 from django.shortcuts import render
-from django.views.generic import CreateView, UpdateView, DeleteView
+from django.views.generic import CreateView, UpdateView, DeleteView, ListView
 from django.urls import reverse_lazy
 
 
@@ -10,11 +10,8 @@ def index(request):
     return render(request, 'index.html')
 
 
-def book_list(request):
-    context = {
-        'books_list': Book.objects.all(),
-    }
-    return render(request, 'books_list.html', context=context)
+class BookList(ListView):
+    queryset = Book.objects.all()
 
 
 def author_list(request):
