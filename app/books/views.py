@@ -1,7 +1,7 @@
 from books.models import Book
 from books.models import Author
 from books.models import Log
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render
 from django.views.generic import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 
@@ -81,10 +81,9 @@ class BookDelete(DeleteView):
     success_url = reverse_lazy('books-list')
 
 
-def author_delete(request, pk):
-    instance = get_object_or_404(Author, pk=pk)
-    instance.delete()
-    return redirect('authors-list')
+class AuthorDelete(DeleteView):
+    model = Author
+    success_url = reverse_lazy('authors-list')
 
 
 def logs_list(request):
