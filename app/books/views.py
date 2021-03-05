@@ -2,12 +2,13 @@ from books.models import Book
 from books.models import Author
 from books.models import Log
 from django.shortcuts import render
-from django.views.generic import CreateView, UpdateView, DeleteView, ListView
+from django.views.generic import (
+    CreateView, UpdateView, DeleteView, ListView, TemplateView)
 from django.urls import reverse_lazy
 
 
-def index(request):
-    return render(request, 'index.html')
+class Index(TemplateView):
+    template_name = 'index.html'
 
 
 class BookList(ListView):
