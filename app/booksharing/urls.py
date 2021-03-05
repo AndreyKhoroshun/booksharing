@@ -11,7 +11,7 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
 
     path('', views.index, name='index'),
-    path('books/list/', views.book_list, name='books-list'),
+    path('books/list/', views.BookList.as_view(), name='books-list'),
     path('authors/list/', views.author_list, name='authors-list'),
     path('books/create/', views.BookCreate.as_view(), name='books-create'),
     path('authors/create/', views.AuthorCreate.as_view(), name='authors-create'),
