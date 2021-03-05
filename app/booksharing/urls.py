@@ -12,7 +12,7 @@ urlpatterns = [
 
     path('', views.index, name='index'),
     path('books/list/', views.BookList.as_view(), name='books-list'),
-    path('authors/list/', views.author_list, name='authors-list'),
+    path('authors/list/', views.AuthorList.as_view(), name='authors-list'),
     path('books/create/', views.BookCreate.as_view(), name='books-create'),
     path('authors/create/', views.AuthorCreate.as_view(), name='authors-create'),
     path('books/update/<int:pk>/', views.BookUpdate.as_view(), name='books-update'),
