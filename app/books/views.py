@@ -1,7 +1,6 @@
 from books.models import Book
 from books.models import Author
 from books.models import Log
-from django.shortcuts import render
 from django.views.generic import (
     CreateView, UpdateView, DeleteView, ListView, TemplateView)
 from django.urls import reverse_lazy
@@ -81,8 +80,5 @@ class AuthorDelete(DeleteView):
     success_url = reverse_lazy('authors-list')
 
 
-def logs_list(request):
-    context = {
-        'logs_list': Log.objects.all()
-    }
-    return render(request, 'logs_list.html', context=context)
+class LogsList(ListView):
+    queryset = Log.objects.all()
