@@ -2,7 +2,7 @@ from books.models import Book
 from books.models import Author
 from books.models import Log
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import CreateView, UpdateView
+from django.views.generic import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 
 
@@ -76,10 +76,9 @@ class AuthorUpdate(UpdateView):
     )
 
 
-def book_delete(request, pk):
-    instance = get_object_or_404(Book, pk=pk)
-    instance.delete()
-    return redirect('books-list')
+class BookDelete(DeleteView):
+    model = Book
+    success_url = reverse_lazy('books-list')
 
 
 def author_delete(request, pk):
