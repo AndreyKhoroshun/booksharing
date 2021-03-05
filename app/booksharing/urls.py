@@ -10,7 +10,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
 
-    path('', views.index, name='index'),
+    path('', views.Index.as_view(), name='index'),
     path('books/list/', views.BookList.as_view(), name='books-list'),
     path('authors/list/', views.AuthorList.as_view(), name='authors-list'),
     path('books/create/', views.BookCreate.as_view(), name='books-create'),
