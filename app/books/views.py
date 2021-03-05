@@ -37,19 +37,18 @@ class BookCreate(CreateView):
     )
 
 
-def author_create(request):
-    form_data = request.POST
-    if request.method == 'POST':
-        form = AuthorForm(form_data)
-        if form.is_valid():
-            form.save()
-            return redirect('authors-list')
-    elif request.method == 'GET':
-        form = AuthorForm()
-    context = {'message': 'Create author',
-               'form': form,
-               }
-    return render(request, 'authors_create.html', context=context)
+class AuthorCreate(CreateView):
+    model = Author
+    success_url = reverse_lazy('authors-list')
+    fields = (
+        'first_name',
+        'last_name',
+        'date_of_birth',
+        'date_of_death',
+        'country',
+        'gender',
+        'native_language',
+    )
 
 
 def book_update(request, pk):
