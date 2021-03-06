@@ -4,6 +4,7 @@ from books.models import Log
 from django.views.generic import (
     CreateView, UpdateView, DeleteView, ListView, TemplateView)
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 class Index(TemplateView):
@@ -18,7 +19,7 @@ class AuthorList(ListView):
     queryset = Author.objects.all()
 
 
-class BookCreate(CreateView):
+class BookCreate(LoginRequiredMixin, CreateView):
     model = Book
     success_url = reverse_lazy('books:list')
     fields = (
@@ -30,7 +31,7 @@ class BookCreate(CreateView):
     )
 
 
-class AuthorCreate(CreateView):
+class AuthorCreate(LoginRequiredMixin, CreateView):
     model = Author
     success_url = reverse_lazy('authors-list')
     fields = (
@@ -44,7 +45,7 @@ class AuthorCreate(CreateView):
     )
 
 
-class BookUpdate(UpdateView):
+class BookUpdate(LoginRequiredMixin, UpdateView):
     model = Book
     success_url = reverse_lazy('books:list')
     fields = (
@@ -56,7 +57,7 @@ class BookUpdate(UpdateView):
     )
 
 
-class AuthorUpdate(UpdateView):
+class AuthorUpdate(LoginRequiredMixin, UpdateView):
     model = Author
     success_url = reverse_lazy('authors-list')
     fields = (
@@ -70,12 +71,12 @@ class AuthorUpdate(UpdateView):
     )
 
 
-class BookDelete(DeleteView):
+class BookDelete(LoginRequiredMixin, DeleteView):
     model = Book
     success_url = reverse_lazy('books:list')
 
 
-class AuthorDelete(DeleteView):
+class AuthorDelete(LoginRequiredMixin, DeleteView):
     model = Author
     success_url = reverse_lazy('authors-list')
 
