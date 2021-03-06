@@ -2,7 +2,7 @@
 
 {% block content %}
     <br>
-    <a href="{% url 'books-create' %}">books create</a>
+    <a href="{% url 'books:create' %}">books create</a>
     <br>
 
     <table border = "1">
@@ -25,7 +25,7 @@
             <td>{{ object.publish_year }}</td>
             <td>{{ object.review }}</td>
             <td>{{ object.condition }}</td>
-            <td><a href="{% url 'books-update' object.pk %}">
+            <td><a href="{% url 'books:update' object.pk %}">
                 Edit</a></td>
         </tr>
         {% endfor %}

@@ -20,7 +20,7 @@ class AuthorList(ListView):
 
 class BookCreate(CreateView):
     model = Book
-    success_url = reverse_lazy('books-list')
+    success_url = reverse_lazy('books:list')
     fields = (
         'author',
         'title',
@@ -46,7 +46,7 @@ class AuthorCreate(CreateView):
 
 class BookUpdate(UpdateView):
     model = Book
-    success_url = reverse_lazy('books-list')
+    success_url = reverse_lazy('books:list')
     fields = (
         'author',
         'title',
@@ -72,7 +72,7 @@ class AuthorUpdate(UpdateView):
 
 class BookDelete(DeleteView):
     model = Book
-    success_url = reverse_lazy('books-list')
+    success_url = reverse_lazy('books:list')
 
 
 class AuthorDelete(DeleteView):

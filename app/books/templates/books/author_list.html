@@ -2,7 +2,7 @@
 
 {% block content %}
     <br>
-    <a href="{% url 'authors-create' %}">authors create</a>
+    <a href="{% url 'books:authors-create' %}">authors create</a>
     <br>
 
 <table border = "1">
@@ -29,7 +29,7 @@
             <td>{{ object.country }}</td>
             <td>{{ object.gender }}</td>
             <td>{{ object.native_language }}</td>
-            <td><a href="{% url 'authors-update' object.pk %}">
+            <td><a href="{% url 'books:authors-update' object.pk %}">
                 Edit</a></td>
         </tr>
         {% endfor %}
