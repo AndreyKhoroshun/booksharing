@@ -1,8 +1,7 @@
 from django.contrib import admin
-
 import debug_toolbar
 from django.urls import include, path
-
+from accounts.views import MyProfileView
 from books import views
 
 
@@ -20,5 +19,7 @@ urlpatterns = [
     path('books/delete/<int:pk>/', views.BookDelete.as_view(), name='books-delete'),
     path('authors/delete/<int:pk>/', views.AuthorDelete.as_view(), name='authors-delete'),
     path('logs/', views.LogsList.as_view(), name='logs'),
+
+    path('accounts/my-profile/<int:pk>/', MyProfileView.as_view(), name='my-profile'),
     path('__debug__/', include(debug_toolbar.urls)),
 ]
