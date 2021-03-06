@@ -1,9 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <br>
-    <a href="{% url 'books:authors-create' %}">authors create</a>
-    <br>
+    {% if request.user.is_authenticated %}
+        <br>
+        <a href="{% url 'books:authors-create' %}">authors create</a>
+        <br>
+    {% endif %}
 
 <table border = "1">
    <tr>
@@ -29,8 +31,10 @@
             <td>{{ object.country }}</td>
             <td>{{ object.gender }}</td>
             <td>{{ object.native_language }}</td>
-            <td><a href="{% url 'books:authors-update' object.pk %}">
-                Edit</a></td>
+            {% if request.user.is_authenticated %}
+                <td><a href="{% url 'books:authors-update' object.pk %}">
+                    Edit</a></td>
+            {% endif %}
         </tr>
         {% endfor %}
   </table>

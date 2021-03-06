@@ -1,9 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <br>
-    <a href="{% url 'books:create' %}">books create</a>
-    <br>
+    {% if request.user.is_authenticated %}
+        <br>
+        <a href="{% url 'books:create' %}">books create</a>
+        <br>
+    {% endif %}
 
     <table border = "1">
    <tr>
@@ -25,8 +27,10 @@
             <td>{{ object.publish_year }}</td>
             <td>{{ object.review }}</td>
             <td>{{ object.condition }}</td>
-            <td><a href="{% url 'books:update' object.pk %}">
-                Edit</a></td>
+            {% if request.user.is_authenticated %}
+                <td><a href="{% url 'books:update' object.pk %}">
+                    Edit</a></td>
+            {% endif %}
         </tr>
         {% endfor %}
   </table>
