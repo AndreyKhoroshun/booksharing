@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% if request.user.is_authenticated %}
+        <br>
+        <a href="{% url 'books:create' %}">books create</a>
+        <br>
+    {% endif %}
+
+    <table border = "1">
+   <tr>
+    <th>#</th>
+    <th>ID</th>
+    <th>Author Name</th>
+    <th>Title</th>
+    <th>Publish Year</th>
+    <th>Review</th>
+    <th>Condition</th>
+    <th></th>
+   </tr>
+        {% for object in object_list %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ object.id }}</td>
+            <td>{{ object.author }}</td>
+            <td>{{ object.title }}</td>
+            <td>{{ object.publish_year }}</td>
+            <td>{{ object.review }}</td>
+            <td>{{ object.condition }}</td>
+            {% if request.user.is_authenticated %}
+                <td><a href="{% url 'books:update' object.pk %}">
+                    Edit</a></td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+  </table>
+{% endblock content %}
