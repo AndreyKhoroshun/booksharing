@@ -6,7 +6,7 @@ class Book(models.Model):
     title = models.CharField(max_length=128)
     publish_year = models.PositiveSmallIntegerField()
     review = models.CharField(max_length=512)
-    condition = models.PositiveSmallIntegerField()
+    condition = models.PositiveSmallIntegerField(null=True)
 
 
 class Author(models.Model):
