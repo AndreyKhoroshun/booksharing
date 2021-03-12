@@ -37,7 +37,7 @@ class Command(BaseCommand):
 
         books_list = []
         for _ in range(total):
-            author = fake.name()
+            author = Author.objects.order_by('?').last()
             title = fake.word()
             publish_year = random.randint(0, datetime.now().year)
             review = fake.text()
