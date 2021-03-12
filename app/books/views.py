@@ -12,7 +12,7 @@ class Index(TemplateView):
 
 
 class BookList(ListView):
-    queryset = Book.objects.all()
+    queryset = Book.objects.all().select_related('author')
 
 
 class AuthorList(ListView):
