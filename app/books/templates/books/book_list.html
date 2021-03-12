@@ -22,7 +22,10 @@
         <tr>
             <td>{{ forloop.counter }}</td>
             <td>{{ object.id }}</td>
-            <td>{{ object.author }}</td>
+            <td>
+                {{ object.author.first_name }}
+                {{ object.author.last_name }}
+            </td>
             <td>{{ object.title }}</td>
             <td>{{ object.publish_year }}</td>
             <td>{{ object.review }}</td>
