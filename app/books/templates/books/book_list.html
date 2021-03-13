@@ -13,6 +13,7 @@
     <th>ID</th>
     <th>Author Name</th>
     <th>Title</th>
+    <th>Category</th>
     <th>Publish Year</th>
     <th>Review</th>
     <th>Condition</th>
@@ -27,6 +28,7 @@
                 {{ object.author.last_name }}
             </td>
             <td>{{ object.title }}</td>
+            <td>{{ object.category.name }}</td>
             <td>{{ object.publish_year }}</td>
             <td>{{ object.review }}</td>
             <td>{{ object.condition }}</td>
