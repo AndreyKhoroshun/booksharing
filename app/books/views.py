@@ -12,7 +12,7 @@ class Index(TemplateView):
 
 
 class BookList(ListView):
-    queryset = Book.objects.all().select_related('author')
+    queryset = Book.objects.all().select_related('author', 'category')
 
 
 class AuthorList(ListView):
@@ -25,6 +25,7 @@ class BookCreate(LoginRequiredMixin, CreateView):
     fields = (
         'author',
         'title',
+        'category',
         'publish_year',
         'review',
         'condition',
@@ -51,6 +52,7 @@ class BookUpdate(LoginRequiredMixin, UpdateView):
     fields = (
         'author',
         'title',
+        'category',
         'publish_year',
         'review',
         'condition',
