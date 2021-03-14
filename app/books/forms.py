@@ -18,6 +18,19 @@ class AuthorForm(forms.ModelForm):
             'native_language',
         )
 
+    def __init__(self, user, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.user = user
+
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        instance.user = self.user
+
+        if commit:
+            instance.save()
+
+        return instance
+
 
 class CategoryForm(forms.ModelForm):
     class Meta:
@@ -38,3 +51,16 @@ class BookForm(forms.ModelForm):
             'review',
             'condition',
         )
+
+    def __init__(self, user, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.user = user
+
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        instance.user = self.user
+
+        if commit:
+            instance.save()
+
+        return instance
