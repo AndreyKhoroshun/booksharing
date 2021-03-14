@@ -5,7 +5,7 @@ from django.views.generic import (
     CreateView, UpdateView, DeleteView, ListView, TemplateView)
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
-from books.forms import BookForm, AuthorForm
+from books.forms import BookForm
 
 
 class FormUserKwargMixin:
@@ -42,10 +42,18 @@ class BookCreate(FormUserKwargMixin, CreateView):
     form_class = BookForm
 
 
-class AuthorCreate(FormUserKwargMixin, CreateView):
+class AuthorCreate(LoginRequiredMixin, CreateView):
     model = Author
     success_url = reverse_lazy('books:authors-list')
-    form_class = AuthorForm
+    fields = (
+        'first_name',
+        'last_name',
+        'date_of_birth',
+        'date_of_death',
+        'country',
+        'gender',
+        'native_language',
+    )
 
 
 class BookUpdate(FormUserKwargMixin, UpdateView):
@@ -54,10 +62,18 @@ class BookUpdate(FormUserKwargMixin, UpdateView):
     form_class = BookForm
 
 
-class AuthorUpdate(FormUserKwargMixin, UpdateView):
+class AuthorUpdate(LoginRequiredMixin, UpdateView):
     model = Author
     success_url = reverse_lazy('books:authors-list')
-    form_class = AuthorForm
+    fields = (
+        'first_name',
+        'last_name',
+        'date_of_birth',
+        'date_of_death',
+        'country',
+        'gender',
+        'native_language',
+    )
 
 
 class BookDelete(LoginRequiredMixin, DeleteView):
