@@ -17,6 +17,7 @@
     <th>Publish Year</th>
     <th>Review</th>
     <th>Condition</th>
+    <th></th>
    </tr>
         {% for object in object_list %}
         <tr>
@@ -31,6 +32,8 @@
             <td>{{ object.publish_year }}</td>
             <td>{{ object.review }}</td>
             <td>{{ object.condition }}</td>
+            <td><a href="{% url 'books:update' object.pk %}">
+                Edit</a></td>
         </tr>
         {% endfor %}
   </table>
