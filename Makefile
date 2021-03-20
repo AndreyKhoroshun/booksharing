@@ -16,3 +16,5 @@ shell_plus:
 flake8:
 	flake8 app/
 
+generate_data:
+	$(manage_py) generate_data 50
