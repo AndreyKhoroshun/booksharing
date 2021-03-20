@@ -9,6 +9,7 @@ from books.forms import BookForm
 from django.http import HttpResponse
 from books.utils import display
 import csv
+import xlwt
 
 
 class FormUserKwargMixin:
@@ -114,4 +115,35 @@ class DownloadCSVBookView(View):
                 display(book, header)
                 for header in self.HEADERS
             ])
+        return response
+
+
+class DownloadXLSXBookView(View):
+
+    HEADERS = (
+        'id',
+        'title',
+        'author.full_name',
+        'author.get_full_name',
+        'publish_year',
+        'condition',
+    )
+
+    def get(self, request):
+        response = HttpResponse(content_type='application/ms-excel')
+        response['Content-Disposition'] = 'attachment; filename="somefilename.xls"'
+        wb = xlwt.Workbook(encoding='utf-8')
+        ws = wb.add_sheet("book_list")
+        row_num = 0
+        font_style = xlwt.XFStyle()
+        font_style.font.bold = True
+        for col_num in range(len(self.HEADERS)):
+            ws.write(row_num, col_num, self.HEADERS[col_num], font_style)
+        font_style = xlwt.XFStyle()
+        data = Book.objects.all().select_related('author').iterator()
+        for book in data:
+            row_num = row_num + 1
+            for col_num in range(len(self.HEADERS)):
+                ws.write(row_num, col_num, display(book, self.HEADERS[col_num]), font_style)
+        wb.save(response)
         return response
