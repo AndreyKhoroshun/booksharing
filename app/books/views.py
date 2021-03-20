@@ -2,10 +2,13 @@ from books.models import Book
 from books.models import Author
 from books.models import Log
 from django.views.generic import (
-    CreateView, UpdateView, DeleteView, ListView, TemplateView)
+    CreateView, UpdateView, DeleteView, ListView, TemplateView, View)
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from books.forms import BookForm
+from django.http import HttpResponse
+from books.utils import display
+import csv
 
 
 class FormUserKwargMixin:
@@ -88,3 +91,27 @@ class AuthorDelete(LoginRequiredMixin, DeleteView):
 
 class LogsList(ListView):
     queryset = Log.objects.all()
+
+
+class DownloadCSVBookView(View):
+
+    HEADERS = (
+        'id',
+        'title',
+        'author.full_name',
+        'author.get_full_name',
+        'publish_year',
+        'condition',
+    )
+
+    def get(self, request):
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="somefilename.csv"'
+        writer = csv.writer(response)
+        writer.writerow(self.HEADERS)
+        for book in Book.objects.all().select_related('author').iterator():
+            writer.writerow([
+                display(book, header)
+                for header in self.HEADERS
+            ])
+        return response
