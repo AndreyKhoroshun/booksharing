@@ -22,4 +22,5 @@ def send_contact_us_email(form_data):
 
 @shared_task
 def debug():
-    print('DEBUG ' * 10)
+    debug_message = ('DEBUG ' * 10)
+    return debug_message
