@@ -141,7 +141,7 @@ class DownloadXLSXBookView(View):
             ws.write(row_num, col_num, self.HEADERS[col_num], font_style)
         font_style = xlwt.XFStyle()
         for book in Book.objects.all().select_related('author').iterator():
-            row_num = row_num + 1
+            row_num += 1
             for col_num in range(len(self.HEADERS)):
                 ws.write(row_num, col_num, display(book, self.HEADERS[col_num]), font_style)
         wb.save(response)
