@@ -11,6 +11,10 @@
     <br>
     <a href="{% url 'books:my-books' %}">My Books</a>
     <br>
+    <a href="{% url 'books:my-requested-books' %}">My Requests</a>
+    <br>
+    <a href="{% url 'books:requested-books' %}">Requested Books</a>
+    <br>
     <a href="{% url 'logout' %}">logout</a>
 {% else %}
     <a href="{% url 'login' %}">login</a>
