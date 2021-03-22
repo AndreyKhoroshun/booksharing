@@ -4,6 +4,8 @@
 <br>
 <a href="{% url 'books:authors-list' %}">authors list</a>
 <br>
+<a href="{% url 'contact-us' %}">Contact Us</a>
+<br>
 {% if request.user.is_authenticated %}
     <a href="{% url 'my-profile' %}">My profile</a>
     <br>

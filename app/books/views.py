@@ -2,10 +2,14 @@ from books.models import Book
 from books.models import Author
 from books.models import Log
 from django.views.generic import (
-    CreateView, UpdateView, DeleteView, ListView, TemplateView)
+    CreateView, UpdateView, DeleteView, ListView, TemplateView, View)
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from books.forms import BookForm
+from django.http import HttpResponse
+from books.utils import display
+import csv
+import xlwt
 
 
 class FormUserKwargMixin:
@@ -88,3 +92,57 @@ class AuthorDelete(LoginRequiredMixin, DeleteView):
 
 class LogsList(ListView):
     queryset = Log.objects.all()
+
+
+class DownloadCSVBookView(View):
+
+    HEADERS = (
+        'id',
+        'title',
+        'author.full_name',
+        'author.get_full_name',
+        'publish_year',
+        'condition',
+    )
+
+    def get(self, request):
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="somefilename.csv"'
+        writer = csv.writer(response)
+        writer.writerow(self.HEADERS)
+        for book in Book.objects.all().select_related('author').iterator():
+            writer.writerow([
+                display(book, header)
+                for header in self.HEADERS
+            ])
+        return response
+
+
+class DownloadXLSXBookView(View):
+
+    HEADERS = (
+        'id',
+        'title',
+        'author.full_name',
+        'author.get_full_name',
+        'publish_year',
+        'condition',
+    )
+
+    def get(self, request):
+        response = HttpResponse(content_type='application/ms-excel')
+        response['Content-Disposition'] = 'attachment; filename="somefilename.xls"'
+        wb = xlwt.Workbook(encoding='utf-8')
+        ws = wb.add_sheet("book_list")
+        row_num = 0
+        font_style = xlwt.XFStyle()
+        font_style.font.bold = True
+        for col_num in range(len(self.HEADERS)):
+            ws.write(row_num, col_num, self.HEADERS[col_num], font_style)
+        font_style = xlwt.XFStyle()
+        for book in Book.objects.all().select_related('author').iterator():
+            row_num += 1
+            for col_num in range(len(self.HEADERS)):
+                ws.write(row_num, col_num, display(book, self.HEADERS[col_num]), font_style)
+        wb.save(response)
+        return response

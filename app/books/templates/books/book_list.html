@@ -7,6 +7,10 @@
         <br>
     {% endif %}
 
+    <a href="{% url 'books:download-csv' %}">Download CSV</a>
+    <br>
+    <a href="{% url 'books:download-xlsx' %}">Download XLSX</a>
+
     <table border = "1">
    <tr>
     <th>#</th>
