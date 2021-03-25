@@ -18,9 +18,6 @@ class RequestBookAdmin(admin.ModelAdmin):
         return False
 
 
-admin.site.register(RequestBook, RequestBookAdmin)
-
-
 class AuthorAdmin(admin.ModelAdmin):
     list_display = (
         'id',
@@ -39,9 +36,6 @@ class AuthorAdmin(admin.ModelAdmin):
     )
     list_filter = ('country', 'gender', 'native_language')
     search_fields = ('first_name', 'last_name')
-
-
-admin.site.register(Author, AuthorAdmin)
 
 
 class BookAdmin(admin.ModelAdmin):
@@ -64,4 +58,6 @@ class BookAdmin(admin.ModelAdmin):
     search_fields = ('title', 'category', 'author')
 
 
+admin.site.register(RequestBook, RequestBookAdmin)
+admin.site.register(Author, AuthorAdmin)
 admin.site.register(Book, BookAdmin)
