@@ -7,6 +7,8 @@ from books.forms import BookForm
 from django.http import HttpResponse
 from books.utils import display
 from django.shortcuts import redirect, get_object_or_404
+from books import model_choices as mch
+from django.contrib import messages
 import csv
 import xlwt
 
@@ -65,6 +67,10 @@ class BookCreate(FormUserKwargMixin, CreateView):
     success_url = reverse_lazy('books:my-books')
     form_class = BookForm
 
+    def get_success_url(self):
+        messages.success(self.request, 'New book created')
+        return super().get_success_url()
+
 
 class AuthorCreate(LoginRequiredMixin, CreateView):
     model = Author
@@ -79,11 +85,19 @@ class AuthorCreate(LoginRequiredMixin, CreateView):
         'native_language',
     )
 
+    def get_success_url(self):
+        messages.success(self.request, 'New author created')
+        return super().get_success_url()
+
 
 class BookUpdate(FormUserKwargMixin, UpdateView):
     model = Book
     success_url = reverse_lazy('books:my-books')
     form_class = BookForm
+
+    def get_success_url(self):
+        messages.success(self.request, 'Book edited')
+        return super().get_success_url()
 
 
 class AuthorUpdate(LoginRequiredMixin, UpdateView):
@@ -99,10 +113,18 @@ class AuthorUpdate(LoginRequiredMixin, UpdateView):
         'native_language',
     )
 
+    def get_success_url(self):
+        messages.success(self.request, 'Author edited')
+        return super().get_success_url()
+
 
 class BookDelete(LoginRequiredMixin, DeleteView):
     model = Book
     success_url = reverse_lazy('books:list')
+
+    def get_success_url(self):
+        messages.success(self.request, 'Book delete')
+        return super().get_success_url()
 
 
 class AuthorDelete(LoginRequiredMixin, DeleteView):
@@ -114,27 +136,64 @@ class RequestBookCreate(LoginRequiredMixin, View):
 
     def get(self, request, book_id):
         book = get_object_or_404(Book, pk=book_id)
-        if not RequestBook.objects.filter(book=book, recipient=request.user).exists():
-            RequestBook.objects.create(book=book, recipient=request.user, status=10)
+        if not RequestBook.objects.filter(book=book, recipient=request.user, status=mch.STATUS_IN_PROGRESS).exists():
+            RequestBook.objects.create(book=book, recipient=request.user, status=mch.STATUS_IN_PROGRESS)
         return redirect('books:list')
 
 
-class RequestBookConfirm(LoginRequiredMixin, View):
+class _ChangeRequestBaseView(LoginRequiredMixin, View):
+    CURRENT_STATUS = None
+    NEW_STATUS = None
+    REDIRECT_NAME = None
+    MESSAGE = None
 
     def get(self, request, request_id):
-        request_obj = get_object_or_404(RequestBook, pk=request_id, status=10)
-        request_obj.status = 20
+        request_obj = get_object_or_404(RequestBook, pk=request_id, status=self.CURRENT_STATUS)
+        request_obj.status = self.NEW_STATUS
         request_obj.save(update_fields=('status',))
-        return redirect('books:requested-books')
+
+        if self.MESSAGE:
+            messages.add_message(request, messages.INFO, self.MESSAGE)
+
+        return redirect(self.REDIRECT_NAME)
 
 
-class RequestBookReject(LoginRequiredMixin, View):
+class RequestBookConfirm(_ChangeRequestBaseView):
+    CURRENT_STATUS = mch.STATUS_IN_PROGRESS
+    NEW_STATUS = mch.STATUS_CONFIRMED
+    REDIRECT_NAME = 'books:requested-books'
+    MESSAGE = 'Book Request Was Confirmed!'
 
-    def get(self, request, request_id):
-        request_obj = get_object_or_404(RequestBook, pk=request_id, status=10)
-        request_obj.status = 30
-        request_obj.save(update_fields=('status',))
-        return redirect('books:requested-books')
+
+class RequestBookReject(_ChangeRequestBaseView):
+    CURRENT_STATUS = mch.STATUS_IN_PROGRESS
+    NEW_STATUS = mch.STATUS_REJECT
+    REDIRECT_NAME = 'books:requested-books'
+    MESSAGE = 'Book Request Was Rejected!'
+
+
+class RequestBookSentViaEmail(_ChangeRequestBaseView):
+    CURRENT_STATUS = mch.STATUS_CONFIRMED
+    NEW_STATUS = mch.STATUS_SENT_TO_RECIPIENT
+    REDIRECT_NAME = 'books:requested-books'
+
+
+class RequestBookReceivedBook(_ChangeRequestBaseView):
+    CURRENT_STATUS = mch.STATUS_SENT_TO_RECIPIENT
+    NEW_STATUS = mch.STATUS_RECIPIENT_RECEIVED_BOOK
+    REDIRECT_NAME = 'books:my-requested-books'
+
+
+class RequestBookSentBackToOwner(_ChangeRequestBaseView):
+    CURRENT_STATUS = mch.STATUS_RECIPIENT_RECEIVED_BOOK
+    NEW_STATUS = mch.STATUS_SENT_BACK_TO_OWNER
+    REDIRECT_NAME = 'books:my-requested-books'
+
+
+class RequestBookOwnerReceivedBack(_ChangeRequestBaseView):
+    CURRENT_STATUS = mch.STATUS_SENT_BACK_TO_OWNER
+    NEW_STATUS = mch.STATUS_OWNER_RECEIVED_BACK
+    REDIRECT_NAME = 'books:requested-books'
 
 
 class LogsList(ListView):
