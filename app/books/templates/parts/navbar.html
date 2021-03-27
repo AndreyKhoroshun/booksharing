@@ -19,6 +19,8 @@
     <br>
     <a href="{% url 'logout' %}">logout</a>
 {% else %}
+    <a href="{% url 'signup' %}">Sign Up</a>
+    <br>
     <a href="{% url 'login' %}">login</a>
 {% endif %}
 <br>
