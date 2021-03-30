@@ -6,6 +6,7 @@ from accounts.tasks import send_contact_us_email
 from accounts.forms import SighUpForm
 from annoying.functions import get_object_or_None
 from django.contrib import messages
+from django.contrib.auth.tokens import default_token_generator
 
 
 class MyProfileView(LoginRequiredMixin, UpdateView):
@@ -47,8 +48,9 @@ class ActivateView(RedirectView):
 
     def get_redirect_url(self, *args, **kwargs):
         username = kwargs.pop('username')
+        token = kwargs.pop('token')
         user = get_object_or_None(User, username=username, is_active=False)
-        if user:
+        if user is not None and default_token_generator.check_token(user, token):
             user.is_active = True
             user.save(update_fields=('is_active', ))
             messages.add_message(self.request, messages.INFO, 'Your account is activated!')
