@@ -1,41 +1,45 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    {% if request.user.is_authenticated %}
-        <br>
-        <a href="{% url 'books:authors-create' %}">authors create</a>
-        <br>
-    {% endif %}
+<div class="row">
+    <div class="col">
+        {% if request.user.is_authenticated %}
+            <br>
+            <a href="{% url 'books:authors-create' %}">authors create</a>
+            <br>
+        {% endif %}
 
-<table border = "1">
-   <tr>
-    <th>#</th>
-    <th>ID</th>
-    <th>First Name</th>
-    <th>Last Name</th>
-    <th>Date of birth</th>
-    <th>Date of death</th>
-    <th>Country</th>
-    <th>Gender</th>
-    <th>Native Language</th>
-    <th></th>
-   </tr>
-        {% for object in object_list %}
+        <table class="table table-striped">
         <tr>
-            <td>{{ forloop.counter }}</td>
-            <td>{{ object.id }}</td>
-            <td>{{ object.first_name }}</td>
-            <td>{{ object.last_name }}</td>
-            <td>{{ object.date_of_birth }}</td>
-            <td>{{ object.date_of_death }}</td>
-            <td>{{ object.country }}</td>
-            <td>{{ object.gender }}</td>
-            <td>{{ object.native_language }}</td>
-            {% if request.user.is_authenticated %}
-                <td><a href="{% url 'books:authors-update' object.pk %}">
-                    Edit</a></td>
-            {% endif %}
+            <th>#</th>
+            <th>ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Date of birth</th>
+            <th>Date of death</th>
+            <th>Country</th>
+            <th>Gender</th>
+            <th>Native Language</th>
+            <th></th>
         </tr>
-        {% endfor %}
-  </table>
+                {% for object in object_list %}
+                <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{ object.id }}</td>
+                    <td>{{ object.first_name }}</td>
+                    <td>{{ object.last_name }}</td>
+                    <td>{{ object.date_of_birth }}</td>
+                    <td>{{ object.date_of_death }}</td>
+                    <td>{{ object.country }}</td>
+                    <td>{{ object.gender }}</td>
+                    <td>{{ object.native_language }}</td>
+                    {% if request.user.is_authenticated %}
+                        <td><a href="{% url 'books:authors-update' object.pk %}">
+                            Edit</a></td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+        </table>
+    </div>
+</div>
 {% endblock content %}
