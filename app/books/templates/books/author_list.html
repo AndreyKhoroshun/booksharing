@@ -5,7 +5,8 @@
     <div class="col">
         {% if request.user.is_authenticated %}
             <br>
-            <a href="{% url 'books:authors-create' %}">authors create</a>
+            <a class="btn btn-primary" href="{% url 'books:authors-create' %}">authors create</a>
+            <br>
             <br>
         {% endif %}
 
@@ -34,7 +35,7 @@
                     <td>{{ object.gender }}</td>
                     <td>{{ object.native_language }}</td>
                     {% if request.user.is_authenticated %}
-                        <td><a href="{% url 'books:authors-update' object.pk %}">
+                        <td><a class="btn btn-primary" href="{% url 'books:authors-update' object.pk %}">
                             Edit</a></td>
                     {% endif %}
                 </tr>

@@ -1,34 +1,37 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-    <table border = "1">
-        <tr>
-            <th>#</th>
-            <th>ID</th>
-            <th>Book</th>
-            <th>Created</th>
-            <th>Status</th>
-            <th>Actions</th>
-        </tr>
-        {% for object in object_list %}
-        <tr>
-            <td>{{ forloop.counter }}</td>
-            <td>{{ object.id }}</td>
-            <td>{{ object.book.title }}</td>
-            <td>{{ object.created }}</td>
-            <td>{{ object.get_status_display }}</td>
-            <td>
-                {% if object.status == mch.STATUS_IN_PROGRESS %}
-                    <a href="{% url 'books:requested-books-confirm' object.id %}">Confirm</a> |
-                    <a href="{% url 'books:requested-books-reject' object.id %}">Reject</a>
-                {% elif object.status == mch.STATUS_CONFIRMED %}
-                    <a href="{% url 'books:sent-via-email' object.id %}">Sent Via Email</a>
-                {% elif object.status == mch.STATUS_SENT_BACK_TO_OWNER %}
-                    <a href="{% url 'books:owner-received' object.id %}">I received book back!</a>
-                {% endif %}
-            </td>
-        </tr>
-        {% endfor %}
-  </table>
+    <div class="row">
+        <div class="col">
+            <table class="table table-striped">
+                <tr>
+                    <th>#</th>
+                    <th>ID</th>
+                    <th>Book</th>
+                    <th>Created</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+                {% for object in object_list %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ object.id }}</td>
+                    <td>{{ object.book.title }}</td>
+                    <td>{{ object.created }}</td>
+                    <td>{{ object.get_status_display }}</td>
+                    <td>
+                        {% if object.status == mch.STATUS_IN_PROGRESS %}
+                            <a class="btn btn-primary" href="{% url 'books:requested-books-confirm' object.id %}">Confirm</a> |
+                            <a class="btn btn-primary" href="{% url 'books:requested-books-reject' object.id %}">Reject</a>
+                        {% elif object.status == mch.STATUS_CONFIRMED %}
+                            <a class="btn btn-primary" href="{% url 'books:sent-via-email' object.id %}">Sent Via Email</a>
+                        {% elif object.status == mch.STATUS_SENT_BACK_TO_OWNER %}
+                            <a class="btn btn-primary" href="{% url 'books:owner-received' object.id %}">I received book back!</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
 {% endblock content %}

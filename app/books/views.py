@@ -1,6 +1,6 @@
 from books.models import Book, Author, Log, RequestBook
 from django.views.generic import (
-    CreateView, UpdateView, DeleteView, ListView, TemplateView, View)
+    CreateView, UpdateView, DeleteView, ListView, TemplateView, View, DetailView)
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from books.forms import BookForm
@@ -70,6 +70,11 @@ class BookCreate(FormUserKwargMixin, CreateView):
     def get_success_url(self):
         messages.success(self.request, 'New book created')
         return super().get_success_url()
+
+
+class BookInfo(DetailView):
+    queryset = Book.objects.all()
+    template_name = 'books/book_info.html'
 
 
 class AuthorCreate(LoginRequiredMixin, CreateView):

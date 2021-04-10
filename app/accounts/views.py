@@ -15,6 +15,7 @@ class MyProfileView(LoginRequiredMixin, UpdateView):
     fields = (
         'first_name',
         'last_name',
+        'avatar',
     )
 
     def get_object(self, queryset=None):

@@ -3,6 +3,11 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 
+def user_upload_avatar(instance, filename):
+    path = f'avatars/{instance.id}/{filename}'
+    return path
+
+
 class User(AbstractUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -10,6 +15,7 @@ class User(AbstractUser):
     email = models.EmailField(
         'email address', blank=False, null=False, unique=True,
     )
+    avatar = models.FileField(null=True, default=None, upload_to='avatars')
 
     def save(self, *args, **kwargs):
 

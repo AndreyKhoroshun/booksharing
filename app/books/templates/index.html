@@ -1,5 +1,14 @@
-{% extends 'base.html'%}
+{% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-    Hello from index
+    <div class="row">
+        <div class="co">
+
+            HELLO FROM INDEX
+            <br>
+            <img src="{% static 'img/python.png' %}">
+        </div>
+    </div>
+
 {% endblock content %}
