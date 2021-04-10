@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'books',
 
     'debug_toolbar',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -134,6 +135,13 @@ AUTH_USER_MODEL = 'accounts.User'
 
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+
+MEDIA_ROOT = BASE_DIR / '..' / 'media'
+MEDIA_URL = '/media/'
+
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 CELERY_BROKER_URL = 'amqp://localhost'
@@ -148,3 +156,4 @@ CELERY_BEAT_SCHEDULE = {
 INTERNAL_IPS = [
     '127.0.0.1',
 ]
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
