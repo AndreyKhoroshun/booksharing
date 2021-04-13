@@ -37,6 +37,7 @@ class BookForm(forms.ModelForm):
             'publish_year',
             'review',
             'condition',
+            'cover',
         )
 
     def __init__(self, user, *args, **kwargs):

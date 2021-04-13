@@ -1,33 +1,36 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-    <table border = "1">
-        <tr>
-            <th>#</th>
-            <th>ID</th>
-            <th>Book</th>
-            <th>Created</th>
-            <th>Status</th>
-            <th>Actions</th>
-        </tr>
-        {% for object in object_list %}
-        <tr>
-            <td>{{ forloop.counter }}</td>
-            <td>{{ object.id }}</td>
-            <td>{{ object.book.title }}</td>
-            <td>{{ object.created }}</td>
-            <td>{{ object.get_status_display }}</td>
-            <td>
-                {% if object.status == mch.STATUS_SENT_TO_RECIPIENT %}
-                    <a href="{% url 'books:book-received' object.id %}">
-                        I got the book!</a>
-                {% elif object.status == mch.STATUS_RECIPIENT_RECEIVED_BOOK %}
-                    <a href="{% url 'books:sent-back-to-owner' object.id %}">
-                        Sent back to owner</a>
-                {% endif %}
-            </td>
-        </tr>
-        {% endfor %}
-  </table>
+    <div class="row">
+        <div class="col">
+            <table class="table table-striped">
+                <tr>
+                    <th>#</th>
+                    <th>ID</th>
+                    <th>Book</th>
+                    <th>Created</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+                {% for object in object_list %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ object.id }}</td>
+                    <td>{{ object.book.title }}</td>
+                    <td>{{ object.created }}</td>
+                    <td>{{ object.get_status_display }}</td>
+                    <td>
+                        {% if object.status == mch.STATUS_SENT_TO_RECIPIENT %}
+                            <a class="btn btn-success" href="{% url 'books:book-received' object.id %}">
+                                I got the book!</a>
+                        {% elif object.status == mch.STATUS_RECIPIENT_RECEIVED_BOOK %}
+                            <a class="btn btn-success" href="{% url 'books:sent-back-to-owner' object.id %}">
+                                Sent back to owner</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
 {% endblock content %}

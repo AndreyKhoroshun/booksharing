@@ -1,43 +1,48 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    {% if request.user.is_authenticated %}
-        <br>
-        <a href="{% url 'books:create' %}">books create</a>
-        <br>
-    {% endif %}
+    <div class="row">
+        <div class="col">
+            <br>
+            <a class="btn btn-primary" href="{% url 'books:download-csv' %}">Download CSV</a>
+            <br>
+            <br>
+            <a class="btn btn-primary" href="{% url 'books:download-xlsx' %}">Download XLSX</a>
+            <br>
+            <br>
 
-    <a href="{% url 'books:download-csv' %}">Download CSV</a>
-    <br>
-    <a href="{% url 'books:download-xlsx' %}">Download XLSX</a>
+            <table class="table table-striped font-size-12">
+                <tr>
+                    <th>#</th>
+                    <th>ID</th>
+                    <th>Author Name</th>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Publish Year</th>
+                    <th>Review</th>
+                    <th>Condition</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                {% for object in object_list %}
+                    <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td>{{ object.id }}</td>
+                        <td>
+                            {{ object.author.first_name }}
+                            {{ object.author.last_name }}
+                        </td>
+                        <td>{{ object.title }}</td>
+                        <td>{{ object.category.name }}</td>
+                        <td>{{ object.publish_year }}</td>
+                        <td>{{ object.review }}</td>
+                        <td>{{ object.condition }}</td>
+                        <td><a class="btn btn-primary" href="{% url 'books:book-info' object.id %}">Book info</a></td>
+                        <td><a class="btn btn-primary" href="{% url 'books:create-book-request' object.id %}">Request Book</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
 
-    <table border = "1">
-   <tr>
-    <th>#</th>
-    <th>ID</th>
-    <th>Author Name</th>
-    <th>Title</th>
-    <th>Category</th>
-    <th>Publish Year</th>
-    <th>Review</th>
-    <th>Condition</th>
-    <th></th>
-   </tr>
-        {% for object in object_list %}
-        <tr>
-            <td>{{ forloop.counter }}</td>
-            <td>{{ object.id }}</td>
-            <td>
-                {{ object.author.first_name }}
-                {{ object.author.last_name }}
-            </td>
-            <td>{{ object.title }}</td>
-            <td>{{ object.category.name }}</td>
-            <td>{{ object.publish_year }}</td>
-            <td>{{ object.review }}</td>
-            <td>{{ object.condition }}</td>
-            <td><a href="{% url 'books:create-book-request' object.id %}">Request Book</a></td>
-        </tr>
-        {% endfor %}
-  </table>
 {% endblock content %}

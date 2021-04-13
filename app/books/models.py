@@ -2,6 +2,11 @@ from django.db import models
 from books import model_choices as mch
 
 
+def book_upload_cover(instance, filename):
+    path = f'covers/{instance.user_id}/{filename}'
+    return path
+
+
 class Author(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
@@ -34,6 +39,7 @@ class Book(models.Model):
                              null=True, default=None)
     author = models.ForeignKey(Author, on_delete=models.SET_NULL,
                                null=True, default=None)
+    cover = models.FileField(null=True, default=None, upload_to=book_upload_cover)
 
 
 class Log(models.Model):
