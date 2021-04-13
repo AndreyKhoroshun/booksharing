@@ -24,4 +24,4 @@ generate_data:
 	$(manage_py) generate_data 50
 
 rungunicorn:
-	gunicorn booksharing.wsgi --workers=5 --chdir=/home/andrey/booksharing/app --max-requests=10000
+	gunicorn booksharing.wsgi --workers=5 --bind 0.0.0.0:8000 --chdir=/home/andrey/booksharing/app --timeout=30 --max-requests=10000
