@@ -3,7 +3,7 @@ from books import model_choices as mch
 
 
 def book_upload_cover(instance, filename):
-    path = f'covers/{instance.user.id}/{filename}'
+    path = f'covers/{instance.user_id}/{filename}'
     return path
 
 

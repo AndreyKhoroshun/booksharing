@@ -73,7 +73,7 @@ class BookCreate(FormUserKwargMixin, CreateView):
 
 
 class BookInfo(DetailView):
-    queryset = Book.objects.all()
+    queryset = Book.objects.all().select_related('author')
     template_name = 'books/book_info.html'
 
 
