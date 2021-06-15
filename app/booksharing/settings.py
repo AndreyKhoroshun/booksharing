@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = ')n#zh&nvod3p_89h%@9ww+p8-^zpg&!8ryp8!l5^%s$t(hnboj'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 ALLOWED_HOSTS = ['*']
 
 
@@ -138,6 +138,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
+
+STATIC_ROOT = BASE_DIR / '..' / 'static_content' / 'static'
 
 MEDIA_ROOT = BASE_DIR / '..' / 'media'
 MEDIA_URL = '/media/'

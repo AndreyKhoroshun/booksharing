@@ -5,7 +5,7 @@ manage_py := python app/manage.py
 runserver:
 	$(manage_py) runserver 0:8000
 
-run_celery:
+runcelery:
 	celery -A booksharing worker -l info
 
 makemigrations:
@@ -22,3 +22,6 @@ flake8:
 
 generate_data:
 	$(manage_py) generate_data 50
+
+rungunicorn:
+	gunicorn booksharing.wsgi --workers=5 --bind 0.0.0.0:8000 --chdir=/home/andrey/booksharing/app --timeout=30 --max-requests=10000
